@@ -1,0 +1,14 @@
+TITLE=Skikda
+API=https://moobin.ibnbadis.ch/
+BASE_URL=192.168.1.1
+SITE_URL=https://moobin.ibnbadis.ch/
+API_URL=https://moobin.ibnbadis.ch/
+I18N_LOCALE=en
+I18N_FALLBACK_LOCALE=en
+I18N_SUPPORTED_LOCALE=en,ar
+IS_ELECTRON=false
+PORT=3000
+MODE_ENV=development
+APP_DEBUG=false
+BITWAVE_ENV=production
+WORKBOX_DEBUG=true
