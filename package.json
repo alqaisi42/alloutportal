@@ -42,6 +42,7 @@
     "chart.js": "^2.7.1",
     "chartist": "^0.10.1",
     "core-js": "^3.19.3",
+    "cors": "^2.8.5",
     "datatables.net-dt": "^1.13.6",
     "google-maps": "^3.2.1",
     "html2canvas": "^1.4.1",
