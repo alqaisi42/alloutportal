@@ -1,0 +1,35 @@
+// ----------------------------------------------
+// Select2
+// ----------------------------------------------
+
+body {
+
+    .select2-container--classic .select2-selection--single,
+    .select2-container--default .select2-selection--single,
+    .select2-container--default .select2-selection--single .select2-selection__rendered,
+    .select2-container--default .select2-selection--single .select2-selection__arrow,
+    .select2-container--default .select2-selection--multiple,
+    .select2-container--classic .select2-selection--single .select2-selection__arrow,
+    .select2-container--classic .select2-selection--single .select2-selection__rendered {
+        border-color: var(--bs-border-color);
+        color: var(--bs-body-color);
+        height: 40px;
+        line-height: 40px;
+    }
+
+    .select2-container--default .select2-selection--multiple {
+        line-height: 27px;
+        height: auto;
+    }
+
+    .select2-container--classic .select2-selection--multiple .select2-selection__choice,
+    .select2-container--default .select2-selection--multiple .select2-selection__choice,
+    .select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
+        background-color: var(--bs-info);
+        border-color: var(--bs-info);
+        color: $white;
+    }
+    .select2-container{
+        display: inline;
+    }
+}
