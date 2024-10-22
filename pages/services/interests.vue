@@ -1,160 +1,86 @@
 <template>
   <div class="body-wrapper">
     <div class="container-fluid">
-      <div
-        class="card bg-info-subtle shadow-none position-relative overflow-hidden mb-4"
-      >
-        <div class="card-body px-4 py-3">
-          <div class="row align-items-center">
-            <div class="col-9">
-              <h4 class="fw-semibold mb-8">{{ $t("Interests") }}</h4>
-              <nav aria-label="breadcrumb">
-                <ol class="breadcrumb">
-                  <li class="breadcrumb-item">
-                    <a class="text-muted text-decoration-none" href="/">{{
-                      $t("Home")
-                    }}</a>
-                  </li>
-                  <li class="breadcrumb-item" aria-current="page">
-                    {{ $t("Interests") }}
-                  </li>
-                </ol>
-              </nav>
-            </div>
-            <div class="col-3">
-              <div class="text-center mb-n5">
-                <img
-                  src="/Modernize/images/breadcrumb/ChatBc.png"
-                  alt=""
-                  class="img-fluid mb-n4"
-                />
-              </div>
-            </div>
+      <!-- Header Card -->
+      <div class="card bg-info-light shadow mb-4">
+        <div class="card-body d-flex justify-content-between align-items-center px-4 py-3">
+          <div>
+            <h4 class="fw-semibold">{{ $t("Interests") }}</h4>
+            <nav aria-label="breadcrumb">
+              <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                  <a class="text-muted text-decoration-none" href="/">{{ $t("Home") }}</a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">{{ $t("Interests") }}</li>
+              </ol>
+            </nav>
+          </div>
+          <div class="text-center">
+            <img src="/Modernize/images/breadcrumb/ChatBc.png" alt="" class="img-fluid" style="max-height: 60px;" />
           </div>
         </div>
       </div>
-      <form class="mt-4 row" novalidate="">
-        <div class="mb-3 form-group col-2">
-          <label>
-            Branch
-            <span class="text-danger">*</span>
-          </label>
-          <div class="controls">
-            <div class="controls">
-              <select
-                @change="filter('branch', $event)"
-                name="select"
-                id="select"
-                required=""
-                class="form-control"
-                aria-invalid="false"
-              >
-                <option value="">All</option>
-                <option
-                  :value="item.id"
-                  v-for="item in branches"
-                  :key="item.id"
-                >
-                  {{ item.nameEn }}
-                </option>
-              </select>
-              <div class="help-block"></div>
-            </div>
-            <div class="help-block"></div>
-          </div>
+
+      <!-- Filter Form -->
+      <form class="row g-3 align-items-end mt-4">
+        <div class="col-2">
+          <label class="form-label">Branch <span class="text-danger">*</span></label>
+          <select @change="filter('branch', $event.target.value)" class="form-select" required>
+            <option value="">All</option>
+            <option :value="item.id" v-for="item in branches" :key="item.id">{{ item.nameEn }}</option>
+          </select>
         </div>
-        <div class="mb-3 form-group col-2">
-          <label>
-            Status
-            <span class="text-danger">*</span>
-          </label>
-          <div class="controls">
-            <select
-              @change="filter('status', $event)"
-              name="select"
-              id="select"
-              required=""
-              class="form-control"
-              aria-invalid="false"
-            >
-              <option value="">All</option>
-              <option value="Active">Active</option>
-              <option value="Inactive">Inactive</option>
-            </select>
-            <div class="help-block"></div>
-          </div>
+
+        <div class="col-2">
+          <label class="form-label">Status <span class="text-danger">*</span></label>
+          <select @change="filter('status', $event.target.value)" class="form-select" required>
+            <option value="">All</option>
+            <option value="Active">Active</option>
+            <option value="Inactive">Inactive</option>
+          </select>
         </div>
-        <div class="mb-3 form-group col-2">
-          <a
-            href="javascript:void(0)"
-            class="btn btn-primary d-flex align-items-center px-3"
-            id="add-notes"
-            style="margin-top: 1.5em"
-          >
-            <i class="ti ti-search me-0 me-md-1 fs-4"></i>
-            <span class="d-none d-md-block font-weight-medium fs-3"
-              >Search</span
-            >
-          </a>
+
+        <div class="col-2">
+          <button type="button" class="btn btn-primary d-flex align-items-center" id="search-btn">
+            <i class="ti ti-search me-1"></i>
+            <span class="d-none d-md-block">Search</span>
+          </button>
         </div>
       </form>
-      <ul
-        class="nav nav-pills p-3 mb-3 rounded align-items-center card flex-row"
-      >
+
+      <!-- Interests Filter Tabs -->
+      <ul class="nav nav-pills p-3 mb-3 rounded bg-light shadow-sm d-flex align-items-center justify-content-between">
         <li class="nav-item">
-          <a
-            href="javascript:void(0)"
-            class="nav-link note-link d-flex align-items-center justify-content-center active px-3 px-md-3 me-0 me-md-2 text-body-color"
-            id="all-category"
-          >
-            <i class="ti ti-list fill-white me-0 me-md-1"></i>
-            <span class="d-none d-md-block font-weight-medium">All</span>
+          <a href="javascript:void(0)" class="nav-link active d-flex align-items-center px-3" id="all-category">
+            <i class="ti ti-list me-1"></i>
+            <span>All</span>
           </a>
         </li>
         <li class="nav-item">
-          <a
-            href="javascript:void(0)"
-            class="nav-link note-link d-flex align-items-center justify-content-center px-3 px-md-3 me-0 me-md-2 text-body-color"
-            id="note-business"
-          >
-            <span class="d-none d-md-block font-weight-medium">Active</span>
+          <a href="javascript:void(0)" @click="filter('status', 1)" class="nav-link d-flex align-items-center px-3" id="active-category">
+            <span>Active</span>
           </a>
         </li>
         <li class="nav-item">
-          <a
-            href="javascript:void(0)"
-            class="nav-link note-link d-flex align-items-center justify-content-center px-3 px-md-3 me-0 me-md-2 text-body-color"
-            id="note-social"
-          >
-            <span class="d-none d-md-block font-weight-medium">Inactive</span>
+          <a href="javascript:void(0)" @click="filter('status', 0)" class="nav-link d-flex align-items-center px-3" id="inactive-category">
+            <span>Inactive</span>
           </a>
         </li>
-        <li
-          class="nav-item ms-auto row gap-1"
-          style="position: absolute; right: 1em"
-        >
-          <a
-            href="javascript:void(0)"
-            class="btn btn-primary d-flex align-items-center px-2 col-5"
-            style="width: 5em"
-            id="add-vendor"
-            @click="showModal('addVendorModal')"
-          >
-            <i class="ti ti-file-export me-0 me-md-1 fs-4"></i>
-            <span class="d-none d-md-block font-weight-medium fs-3">New</span>
-          </a>
+        <li class="nav-item ms-auto">
+          <button type="button" class="btn btn-primary" id="add-vendor" @click="showModal('addVendorModal')">
+            <i class="ti ti-file-export me-1"></i>
+            <span>New</span>
+          </button>
         </li>
       </ul>
 
-      <div class="card card-body">
-        <h3>Interests ({{ listing.length }})</h3>
-        <div class="table-responsive" v-show="load">
-          <table
-            id=""
-            class="table table-striped table-bordered"
-            style="width: 100%"
-          >
-            <thead>
+      <!-- Interests Table -->
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title mb-4">Interests ({{ listing.length }})</h5>
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
               <tr>
                 <th>#</th>
                 <th>Image</th>
@@ -164,255 +90,88 @@
                 <th>Status</th>
                 <th>Action</th>
               </tr>
-            </thead>
-            <tbody>
+              </thead>
+              <tbody>
               <tr v-for="item in listing" :key="item.createdDate">
                 <td>{{ item.id }}</td>
                 <td>
-                  <img
-                    height="50"
-                    width="50"
-                    :src="item.imagePath"
-                    :alt="item.nameEn"
-                  />
+                  <img :src="item.imagePath" :alt="item.nameEn" height="50" width="50" class="rounded" />
                 </td>
                 <td>{{ item.nameEn }}</td>
                 <td>{{ getDate(item.createdDate) }}</td>
                 <td>{{ item.branchName }}</td>
                 <td>
-                  <span v-if="item.isActive" class="btn btn-sm badge-success"
-                    >Active</span
-                  >
-                  <span v-else class="btn btn-sm badge-danger">Inactive</span>
+                    <span :class="item.isActive ? 'badge bg-success' : 'badge bg-danger'">
+                      {{ item.isActive ? 'Active' : 'Inactive' }}
+                    </span>
                 </td>
                 <td>
-                  <div class="action-btn">
-                    <a
-                      @click="get(item.id)"
-                      href="javascript:void(0)"
-                      class="ms-2 btn btn-info btn-sm"
-                    >
-                      Edit
-                    </a>
-                    <a
-                      @click="performAction(item.id)"
-                      href="javascript:void(0)"
-                      class="ms-2 btn badge-danger btn-sm"
-                    >
-                      Delete
-                    </a>
-                  </div>
+                  <button @click="get(item.id)" class="btn btn-info btn-sm me-2">Edit</button>
+                  <button @click="performAction(item.id)" class="btn btn-danger btn-sm">Delete</button>
                 </td>
               </tr>
-            </tbody>
-            <tfoot>
-              <tr>
-                <th>#</th>
-                <th>Image</th>
-                <th>Name</th>
-                <th>Created On</th>
-                <th>Status</th>
-                <th>Action</th>
-              </tr>
-            </tfoot>
-          </table>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
-      <div
-        class="modal fade"
-        id="addVendorModal"
-        tabindex="-1"
-        role="dialog"
-        aria-labelledby="addVendorModalTitle"
-        aria-hidden="true"
-      >
-        <div
-          class="modal-dialog modal-dialog-centered"
-          role="document"
-          style="width: 80% !important; max-width: 80% !important"
-        >
+
+      <!-- Add Interests Modal -->
+      <div class="modal fade" id="addVendorModal" tabindex="-1" aria-labelledby="addVendorModalTitle" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
           <div class="modal-content">
-            <div class="modal-header d-flex align-items-center">
+            <div class="modal-header">
               <h5 class="modal-title">{{ $t("Add Interests") }}</h5>
-              <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
+              <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
             </div>
             <div class="modal-body">
-              <div class="add-contact-box">
-                <div class="add-contact-content">
-                  <ul class="nav nav-underline" id="myTab" role="tablist">
-                    <li class="nav-item" role="presentation">
-                      <a
-                        class="nav-link active"
-                        id="active-tab"
-                        data-bs-toggle="tab"
-                        href="#english"
-                        role="tab"
-                        aria-controls="active"
-                        aria-expanded="true"
-                        aria-selected="true"
-                      >
-                        <span>English</span>
-                      </a>
-                    </li>
-                    <li class="nav-item" role="presentation">
-                      <a
-                        class="nav-link"
-                        id="link1-tab"
-                        data-bs-toggle="tab"
-                        href="#arabic"
-                        role="tab"
-                        aria-controls="link1"
-                        aria-selected="false"
-                        tabindex="-1"
-                      >
-                        <span>Arabic</span>
-                      </a>
-                    </li>
-                  </ul>
-                  <div
-                    class="tab-content tabcontent-border py-3"
-                    id="myTabContent"
-                  >
-                    <div
-                      role="tabpanel"
-                      class="tab-pane fade active show"
-                      id="english"
-                      aria-labelledby="active-tab"
-                    >
-                      <div class="row">
-                        <form class="mt-4 col-12 row" novalidate="">
-                          <div class="mb-3 form-group col-12">
-                            <label>
-                              Interest Name (EN)
-                              <span class="text-danger">*</span>
-                            </label>
-                            <div class="controls">
-                              <input
-                                v-model="data.nameEn"
-                                type="text"
-                                name="text"
-                                class="form-control"
-                                required=""
-                                data-validation-required-message="This field is required"
-                                aria-invalid="false"
-                              />
-                              <div class="help-block"></div>
-                            </div>
-                          </div>
-                        </form>
-                      </div>
+              <div class="tab-content">
+                <div class="tab-pane fade show active" id="english" role="tabpanel">
+                  <form class="row g-3">
+                    <div class="col-12">
+                      <label class="form-label">Interest Name (EN) <span class="text-danger">*</span></label>
+                      <input v-model="data.nameEn" type="text" class="form-control" required>
                     </div>
-                    <div
-                      class="tab-pane fade"
-                      id="arabic"
-                      role="tabpanel"
-                      aria-labelledby="link1-tab"
-                    >
-                      <form class="mt-4 col-12 row" novalidate="">
-                        <div class="mb-3 form-group col-12">
-                          <label>
-                            Interests Name (JO)
-                            <span class="text-danger">*</span>
-                          </label>
-                          <div class="controls">
-                            <input
-                              v-model="data.nameAr"
-                              type="text"
-                              name="text"
-                              class="form-control"
-                              required=""
-                              data-validation-required-message="This field is required"
-                              aria-invalid="false"
-                            />
-                            <div class="help-block"></div>
-                          </div>
-                        </div>
-                      </form>
+                  </form>
+                </div>
+                <div class="tab-pane fade" id="arabic" role="tabpanel">
+                  <form class="row g-3">
+                    <div class="col-12">
+                      <label class="form-label">Interest Name (AR) <span class="text-danger">*</span></label>
+                      <input v-model="data.nameAr" type="text" class="form-control" required>
                     </div>
-                  </div>
-                  <div class="row">
-                    <div class="mb-3 form-group col-4">
-                      <label>Status <span class="text-danger">*</span></label>
-                      <div class="controls">
-                        <select
-                          v-model="data.isActive"
-                          name="select"
-                          id="select"
-                          required=""
-                          class="form-control"
-                          aria-invalid="false"
-                        >
-                          <option value="">Select Status</option>
-                          <option value="1">Active</option>
-                          <option value="2">Inactive</option>
-                        </select>
-                        <div class="help-block"></div>
-                      </div>
-                    </div>
-                    <div class="mb-3 form-group col-4">
-                      <label>Branch <span class="text-danger">*</span></label>
-                      <div class="controls">
-                        <select
-                          v-model="data.branchId"
-                          name="select"
-                          id="select"
-                          required=""
-                          class="form-control"
-                          aria-invalid="false"
-                        >
-                          <option value="">Select Branch</option>
-                          <option selected value="1">Branch 1</option>
-                          <option value="2">Inactive</option>
-                        </select>
-                        <div class="help-block"></div>
-                      </div>
-                    </div>
-                    <div class="mb-3 form-group col-4">
-                      <label>Priority <span class="text-danger">*</span></label>
-                      <div class="controls">
-                        <select
-                          v-model="data.priority"
-                          name="select"
-                          id="select"
-                          required=""
-                          class="form-control"
-                          aria-invalid="false"
-                        >
-                          <option value="">Select Priority</option>
-                          <option selected value="1">1</option>
-                          <option value="2">2</option>
-                        </select>
-                        <div class="help-block"></div>
-                      </div>
-                    </div>
-                    <FileUpload
-                      @upload="handleSingleFileUpload"
-                      :key="uploadComponenet"
-                      :multiple="false"
-                    />
-                  </div>
+                  </form>
                 </div>
               </div>
+              <div class="row g-3 mt-4">
+                <div class="col-4">
+                  <label class="form-label">Status <span class="text-danger">*</span></label>
+                  <select v-model="data.isActive" class="form-select" required>
+                    <option value="">Select Status</option>
+                    <option value="1">Active</option>
+                    <option value="0">Inactive</option>
+                  </select>
+                </div>
+                <div class="col-4">
+                  <label class="form-label">Branch <span class="text-danger">*</span></label>
+                  <select v-model="data.branchId" class="form-select" required>
+                    <option value="">Select Branch</option>
+                    <option :value="item.id" v-for="item in branches" :key="item.id">{{ item.nameEn }}</option>
+                  </select>
+                </div>
+                <div class="col-4">
+                  <label class="form-label">Priority <span class="text-danger">*</span></label>
+                  <select v-model="data.priority" class="form-select" required>
+                    <option value="">Select Priority</option>
+                    <option :value="i" v-for="i in 10" :key="i">{{ i }}</option>
+                  </select>
+                </div>
+              </div>
+              <FileUpload @upload="handleSingleFileUpload" :key="uploadComponenet" :multiple="false" />
             </div>
             <div class="modal-footer">
-              <button
-                id=""
-                @click="submit()"
-                class="btn btn-success rounded-pill px-4"
-              >
-                Add
-              </button>
-              <button
-                class="btn btn-danger rounded-pill px-4"
-                data-bs-dismiss="modal"
-              >
-                Discard
-              </button>
+              <button @click="submit()" class="btn btn-success">Add</button>
+              <button class="btn btn-danger" data-bs-dismiss="modal">Discard</button>
             </div>
           </div>
         </div>
@@ -483,29 +242,33 @@ export default {
     if (!process.client) return;
     this.getAll();
   },
-  component: {
+  components: {
     FileUpload,
   },
   methods: {
-    filter(key, e) {
+    filter(key, value) {
       this.load = false;
-      let value = e.target.value;
       let url = this.link + "";
       axios
-        .get(url, this.config)
-        .then((response) => {
-          if (response.data.success == true) {
-            this.listing = response.data.response;
-            setTimeout(() => {
-              this.load = true;
-            }, 500);
-          } else {
-            this.listing = [];
-          }
-        })
-        .catch((error) => {
-          this.$toast.error(error.response.data.messageText).goAway(1500);
-        });
+          .get(url, {
+            auth: {
+              username: this.username,
+              password: this.password,
+            },
+          })
+          .then((response) => {
+            if (response.data.success == true) {
+              this.listing = response.data.response;
+              setTimeout(() => {
+                this.load = true;
+              }, 500);
+            } else {
+              this.listing = [];
+            }
+          })
+          .catch((error) => {
+            this.$toast.error(error.response.data.messageText).goAway(1500);
+          });
     },
     getDate(timing) {
       return moment.utc(timing).format("MMMM DD, YYYY HH:mm:ss");
@@ -514,36 +277,34 @@ export default {
       $(".preloader").show();
       this.load = false;
       await axios
-        .get("/base/interests/all", {
-          auth: {
-            username: this.username,
-            password: this.password,
-          },
-        })
-        .then((response) => {
-          if (response.data.success) {
-            this.listing = response.data.response;
-            setTimeout(() => {
-              this.load = true;
-              $(".preloader").hide();
-            }, 500);
-          } else this.$toast.error(response.data.message).goAway(1500);
-        })
-        .catch((error) => {
-          this.$toast.error(error.response.data.messageText).goAway(1500);
-        });
-    },
-    performAction(id = null) {
-      this.$confirm("Are you sure you want to perform this action?").then(
-        () => {
-          this.token = JSON.parse(localStorage.getItem("access_token"));
-          const config = {
+          .get("/base/interests/all", {
             auth: {
               username: this.username,
               password: this.password,
             },
-          };
-          axios
+          })
+          .then((response) => {
+            if (response.data.success) {
+              this.listing = response.data.response;
+              setTimeout(() => {
+                this.load = true;
+                $(".preloader").hide();
+              }, 500);
+            } else this.$toast.error(response.data.message).goAway(1500);
+          })
+          .catch((error) => {
+            this.$toast.error(error.response.data.messageText).goAway(1500);
+          });
+    },
+    performAction(id = null) {
+      this.$confirm("Are you sure you want to perform this action?").then(() => {
+        const config = {
+          auth: {
+            username: this.username,
+            password: this.password,
+          },
+        };
+        axios
             .delete("/base/interests/" + id, config)
             .then((response) => {
               if (response.data.success) {
@@ -554,8 +315,7 @@ export default {
             .catch((error) => {
               this.$toast.error(error.response.data.messageText).goAway(1500);
             });
-        }
-      );
+      });
     },
     get(code) {
       const config = {
@@ -565,21 +325,21 @@ export default {
         },
       };
       axios
-        .get("/base/interests/" + code, config)
-        .then((response) => {
-          if (response.data.success) {
-            this.data = response.data.response;
-            this.showModal("addVendorModal");
-          } else this.$toast.error(response.data.message).goAway(1500);
-        })
-        .catch((error) => {
-          this.$toast.error(error.response.data.messageText).goAway(1500);
-        });
+          .get("/base/interests/" + code, config)
+          .then((response) => {
+            if (response.data.success) {
+              this.data = response.data.response;
+              this.showModal("addVendorModal");
+            } else this.$toast.error(response.data.message).goAway(1500);
+          })
+          .catch((error) => {
+            this.$toast.error(error.response.data.messageText).goAway(1500);
+          });
     },
     onScriptLoaded() {
       this.externalLoaded = true;
       setTimeout(() => {
-        this.dataTable = $("#example").DataTable({
+        this.dataTable = $("table").DataTable({
           authWidth: true,
           responsive: true,
           bDestroy: true,
@@ -592,8 +352,8 @@ export default {
     submit() {
       const config = {
         auth: {
-          username: "user",
-          password: "123456",
+          username: this.username,
+          password: this.password,
         },
       };
       const formData = new FormData();
@@ -606,19 +366,19 @@ export default {
       formData.append("userID", 1);
       if (this.file) formData.append("file", this.file);
       axios
-        .post("/base/interests/add", formData, config)
-        .then((response) => {
-          if (response.data.success == true) {
-            this.$toast.success(response.data.messageText).goAway(1500);
-            this.getAll();
-            this.uploadComponenet += 1;
-          } else this.$toast.error("Error").goAway(1500);
-        })
-        .catch((error) => {
-          if (error.response.data.success == false) {
-            this.$toast.error("Error").goAway(1500);
-          }
-        });
+          .post("/base/interests/add", formData, config)
+          .then((response) => {
+            if (response.data.success == true) {
+              this.$toast.success(response.data.messageText).goAway(1500);
+              this.getAll();
+              this.uploadComponenet += 1;
+            } else this.$toast.error("Error").goAway(1500);
+          })
+          .catch((error) => {
+            if (error.response.data.success == false) {
+              this.$toast.error("Error").goAway(1500);
+            }
+          });
     },
     showModal(id) {
       $("#" + id).modal("toggle");
@@ -626,53 +386,26 @@ export default {
   },
 };
 </script>
+
 <style>
-.upload-prescription {
-  display: flex;
-  position: relative;
+/* Custom styles */
+.body-wrapper {
+  background-color: #f8f9fa;
 }
-
-.upload-prescription > p {
-  font-size: 27px;
-  font-family: Poppins-Medium;
-  color: #171717;
-  position: absolute;
-  left: 4%;
-  top: 50px;
+.card {
+  border-radius: 12px;
 }
-
-.uploadingzone {
-  border: 2px dashed rgba(41, 45, 50, 35%);
-  border-radius: 13px;
-  padding: 8px;
-  display: flex;
+.nav-pills .nav-link {
+  border-radius: 8px;
 }
-
-.uploaddetails {
-  position: relative;
-  padding-left: 3%;
+.nav-pills .nav-link.active {
+  background-color: #0d6efd;
+  color: white;
 }
-
-.icon svg {
-  margin: 22px;
+.table thead th {
+  background-color: #f1f1f1;
 }
-
-.uploaddetails progress {
-  width: 80px;
-  position: absolute;
-  bottom: 9px;
-  height: 7px;
-  margin-left: 25%;
-}
-
-.uploaddetails .percentageindicator {
-  margin: 0;
-  position: absolute;
-  bottom: 4px;
-  font-size: 9px;
-  font-family: Poppins-Medium;
-  color: #1c1c1c;
-  opacity: 100%;
-  left: 13%;
+.btn-close {
+  background-color: #e0e0e0;
 }
 </style>

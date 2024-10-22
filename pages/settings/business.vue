@@ -211,7 +211,7 @@
                 <div class="controls">
                   <input
                     v-model="data.companyCopyrightText"
-                    placeholder="Company Copyright Text"
+                    placeholder="ALL OUT FZC-LLC @2024"
                     name="text"
                     class="form-control"
                     required=""

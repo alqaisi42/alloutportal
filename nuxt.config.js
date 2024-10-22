@@ -248,12 +248,12 @@ export default {
   },
   proxy: {
     '/base/': {
-      target: 'http://143.198.103.113:8086/service/',
+      target: 'http://185.192.97.21:8086/service/',
       pathRewrite: { '^/base/': '' },
       changeOrigin: true,
     },
     '/branch/': {
-      target: 'http://143.198.103.113:8086/main/',
+      target: 'http://185.192.97.21:8086/main/',
       pathRewrite: { '^/branch/': '' },
       changeOrigin: true,
     },

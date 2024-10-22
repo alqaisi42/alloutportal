@@ -150,7 +150,9 @@
             id="all-category"
           >
             <i class="ti ti-list fill-white me-0 me-md-1"></i>
-            <span class="d-none d-md-block font-weight-medium"
+            <span
+              class="d-none d-md-block font-weight-medium"
+              style="color: white"
               >All Reviews</span
             >
           </a>
@@ -414,7 +416,10 @@
                                   id="searchInput"
                                   @input="searchVendors"
                                 />
-                                <div class="searchResults" v-if="vendors.length > 0">
+                                <div
+                                  class="searchResults"
+                                  v-if="vendors.length > 0"
+                                >
                                   <ul>
                                     <li
                                       class="resultItems"
@@ -440,7 +445,10 @@
                                   id="searchInput"
                                   @input="searchCustomers"
                                 />
-                                <div class="searchResults" v-if="customers.length > 0">
+                                <div
+                                  class="searchResults"
+                                  v-if="customers.length > 0"
+                                >
                                   <ul>
                                     <li
                                       class="resultItems"
@@ -466,7 +474,10 @@
                                   id="searchInput"
                                   @input="searchServices"
                                 />
-                                <div class="searchResults" v-if="services.length > 0">
+                                <div
+                                  class="searchResults"
+                                  v-if="services.length > 0"
+                                >
                                   <ul>
                                     <li
                                       class="resultItems"

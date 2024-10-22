@@ -42,14 +42,14 @@
                 <input
                   class="coloring"
                   type="color"
-                  v-model="data.primaryColor"
+                  v-model="data.websiteColorPrimary"
                   style="width: 100%"
                 />
                 <!-- <div
                     class="coloring"
                     :style="{ backgroundColor: data.primaryColor }"
                   ></div> -->
-                <p class="colorCode">{{ data.primaryColor }}</p>
+                <p class="colorCode">{{ data.websiteColorSecondary }}</p>
                 <p class="colorType">Primary Color</p>
               </div>
               <div class="col-6">

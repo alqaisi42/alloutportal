@@ -184,9 +184,10 @@
                   <td>
                     <span
                       :class="{
-                        'badge-success': item.adrenalineMeterEn == 'Low Adrenaline',
-                        'badge-warning': item.adrenalineMeterEn == 'Medium Adrenaline',
-                        'badge-danger': item.adrenalineMeterEn == 'High Adrenaline',
+                        'badge-success': item.adrenalineMeterEn.includes('Low'),
+                        'badge-warning':
+                          item.adrenalineMeterEn.includes('Medium'),
+                        'badge-danger': item.adrenalineMeterEn.includes('High'),
                       }"
                       class="btn btn-sm"
                       >{{ item.adrenalineMeterEn }}</span
@@ -726,7 +727,7 @@ export default {
         url = "/base/api/services" + value;
         this.step = "all";
       }
-      this.tmpLink=url
+      this.tmpLink = url;
       axios
         .get(url, this.config)
         .then((response) => {

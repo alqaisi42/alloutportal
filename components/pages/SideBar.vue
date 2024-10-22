@@ -1,6 +1,7 @@
 <template>
   <aside class="left-sidebar with-vertical">
     <div>
+      +962788398373
       <!-- ---------------------------------- -->
       <!-- Start Vertical Layout Sidebar -->
       <!-- ---------------------------------- -->
@@ -39,6 +40,18 @@
             </nuxt-link>
           </li>
           <li class="sidebar-item">
+            <nuxt-link
+              to="/chatbot-requests"
+              class="sidebar-link"
+              aria-expanded="false"
+            >
+              <span>
+                <i class="ti ti-aperture"></i>
+              </span>
+              <span class="hide-menu">Chatbot Requests</span>
+            </nuxt-link>
+          </li>
+          <li class="sidebar-item">
             <a
               class="sidebar-link has-arrow"
               href="javascript:void(0)"
@@ -60,26 +73,26 @@
                   <span class="hide-menu">{{ $t("Manage") }}</span>
                 </nuxt-link>
               </li>
-              <li class="sidebar-item">
-                <nuxt-link to="/booking/combo" class="sidebar-link">
-                  <div
-                    class="round-16 d-flex align-items-center justify-content-center"
-                  >
-                    <i class="ti ti-circle"></i>
-                  </div>
-                  <span class="hide-menu">{{ $t("Combo") }}</span>
-                </nuxt-link>
-              </li>
-              <li class="sidebar-item">
-                <nuxt-link to="/booking/refund" class="sidebar-link">
-                  <div
-                    class="round-16 d-flex align-items-center justify-content-center"
-                  >
-                    <i class="ti ti-circle"></i>
-                  </div>
-                  <span class="hide-menu">{{ $t("Refund") }}</span>
-                </nuxt-link>
-              </li>
+<!--              <li class="sidebar-item">-->
+<!--                <nuxt-link to="/booking/combo" class="sidebar-link">-->
+<!--                  <div-->
+<!--                    class="round-16 d-flex align-items-center justify-content-center"-->
+<!--                  >-->
+<!--                    <i class="ti ti-circle"></i>-->
+<!--                  </div>-->
+<!--                  <span class="hide-menu">{{ $t("Combo") }}</span>-->
+<!--                </nuxt-link>-->
+<!--              </li>-->
+<!--              <li class="sidebar-item">-->
+<!--                <nuxt-link to="/booking/refund" class="sidebar-link">-->
+<!--                  <div-->
+<!--                    class="round-16 d-flex align-items-center justify-content-center"-->
+<!--                  >-->
+<!--                    <i class="ti ti-circle"></i>-->
+<!--                  </div>-->
+<!--                  <span class="hide-menu">{{ $t("Refund") }}</span>-->
+<!--                </nuxt-link>-->
+<!--              </li>-->
             </ul>
           </li>
           <li class="sidebar-item">
@@ -366,11 +379,7 @@
             </nuxt-link>
           </li> -->
           <li class="sidebar-item">
-            <nuxt-link
-              to="/coupons"
-              class="sidebar-link"
-              aria-expanded="false"
-            >
+            <nuxt-link to="/coupons" class="sidebar-link" aria-expanded="false">
               <span>
                 <i class="ti ti-aperture"></i>
               </span>
@@ -470,7 +479,9 @@
                   >
                     <i class="ti ti-circle"></i>
                   </div>
-                  <span class="hide-menu">{{ $t("Business Information") }}</span>
+                  <span class="hide-menu">{{
+                    $t("Business Information")
+                  }}</span>
                 </nuxt-link>
               </li>
               <li class="sidebar-item">

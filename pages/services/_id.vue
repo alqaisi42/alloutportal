@@ -3,7 +3,7 @@
     <div class="container-fluid">
       <div class="widget-content searchable-container list">
         <div class="card card-body">
-          <h3>Add service</h3>
+          <h3 style="margin-bottom: 25px">Add Service</h3>
           <div class="row">
             <div class="col-md-12 col-xl-12">
               <form
@@ -11,235 +11,17 @@
                 v-on:submit.prevent="submit"
                 novalidate
               >
-                <FileUpload
-                  @upload="HandleFileUpload"
-                  :key="uploadComponenet"
-                  :upload="true"
-                  :request="true"
-                  :multiple="false"
-                  :fileList="imagesList"
+                <label for="" class="costum_label"
+                  >Upload Image for service
+                  <span class="required-star">*</span></label
+                >
+                <SingleImageUpload
+                  @upload="handleSingleImageUpload"
+                  :imagePath="data.imagePath"
                   :params="'Services'"
                 />
 
                 <div class="col-12 row">
-                  <div class="col-6">
-                    <div class="mb-3 form-group col-12">
-                      <label> Category </label>
-                      <div class="controls">
-                        <select
-                          @change="getSubCategories($event)"
-                          name="select"
-                          id="select"
-                          v-model="data.categoryId"
-                          required=""
-                          class="form-control"
-                          aria-invalid="false"
-                        >
-                          <option value="">Main Category</option>
-                          <option
-                            :value="item.id"
-                            v-for="item in categories"
-                            :key="item.id"
-                          >
-                            {{ item.nameEn }}
-                          </option>
-                        </select>
-                        <div class="help-block"></div>
-                      </div>
-                    </div>
-                    <div class="mb-3 form-group col-12" v-if="subcategories">
-                      <label> Sub Category </label>
-                      <div class="controls">
-                        <select
-                          name="select"
-                          id="select"
-                          v-model="data.subCategoryId"
-                          required=""
-                          class="form-control"
-                          aria-invalid="false"
-                        >
-                          <option value="">Main Sub Category</option>
-                          <option
-                            :value="item.id"
-                            v-for="item in subcategories"
-                            :key="item.id"
-                          >
-                            {{ item.nameEn }}
-                          </option>
-                        </select>
-                        <div class="help-block"></div>
-                      </div>
-                    </div>
-                    <div class="mb-3 form-group col-12">
-                      <label> Location </label>
-                      <div class="controls">
-                        <select
-                          v-model="data.locationId"
-                          name="select"
-                          id="select"
-                          required=""
-                          class="form-control"
-                          aria-invalid="false"
-                        >
-                          <option value="">Select location</option>
-                          <option
-                            :value="item.id"
-                            v-for="item in locations"
-                            :key="item.id"
-                          >
-                            {{ item.titleEn }}
-                          </option>
-                        </select>
-                        <div class="help-block"></div>
-                      </div>
-                    </div>
-                    <div class="mb-3 form-group col-12">
-                      <label> Personal information </label>
-                      <div class="controls">
-                        <select
-                          v-model="data.personalInfoId"
-                          name="select"
-                          id="select"
-                          required=""
-                          class="form-control"
-                          aria-invalid="false"
-                        >
-                          <option value="">Select perosonal information</option>
-                          <option
-                            :value="item.id"
-                            v-for="item in personals"
-                            :key="item.id"
-                          >
-                            {{ item.titleEn }}
-                          </option>
-                        </select>
-                        <div class="help-block"></div>
-                      </div>
-                    </div>
-                    <div class="mb-3 form-group col-12">
-                      <label> Company fees </label>
-                      <div class="controls">
-                        <input
-                          v-model="data.fees"
-                          type="text"
-                          name="text"
-                          class="form-control"
-                          required=""
-                          data-validation-required-message="This field is required"
-                          aria-invalid="false"
-                        />
-                        <div class="help-block"></div>
-                      </div>
-                    </div>
-                  </div>
-                  <div class="col-6">
-                    <div class="mb-3 form-group col-12">
-                      <label> Pricing </label>
-                      <div class="controls">
-                        <select
-                          v-model="data.pricingTypeId"
-                          name="select"
-                          id="select"
-                          required=""
-                          class="form-control"
-                          aria-invalid="false"
-                        >
-                          <option value="">Select pricing</option>
-                          <option
-                            :value="item.id"
-                            v-for="item in pricings"
-                            :key="item.id"
-                          >
-                            {{ item.titleEn }}
-                          </option>
-                        </select>
-                        <div class="help-block"></div>
-                      </div>
-                    </div>
-                    <div class="mb-3 form-group col-12">
-                      <label> Interest </label>
-                      <div class="controls">
-                        <select
-                          v-model="data.interestId"
-                          name="select"
-                          id="select"
-                          required=""
-                          class="form-control"
-                          aria-invalid="false"
-                        >
-                          <option value="">Select your interest</option>
-                          <option
-                            :value="item.id"
-                            v-for="item in interests"
-                            :key="item.id"
-                          >
-                            {{ item.nameEn }}
-                          </option>
-                        </select>
-                        <div class="help-block"></div>
-                      </div>
-                    </div>
-                    <div class="mb-3 form-group col-12">
-                      <label> Adrenaline meter </label>
-                      <div class="controls">
-                        <select
-                          v-model="data.adrenalineId"
-                          name="select"
-                          id="select"
-                          required=""
-                          class="form-control"
-                          aria-invalid="false"
-                        >
-                          <option value="">
-                            Select the level of adrenaline
-                          </option>
-                          <option
-                            :value="item.id"
-                            v-for="item in adrenalines"
-                            :key="item.id"
-                          >
-                            {{ item.titleEn }}
-                          </option>
-                        </select>
-                        <div class="help-block"></div>
-                      </div>
-                    </div>
-                    <div class="mb-3 form-group col-12">
-                      <label> Amenities </label>
-                      <div class="controls">
-                        <select
-                          @change="setAmenities($event)"
-                          name="select"
-                          id="select"
-                          required=""
-                          class="form-control"
-                          aria-invalid="false"
-                        >
-                          <option
-                            :value="key"
-                            v-for="(item, key) in amenitites"
-                            :key="item.id + 'ame'"
-                          >
-                            {{ item.titleEn }}
-                          </option>
-                        </select>
-                        <div class="help-block"></div>
-                      </div>
-                      <div class="col-12 row mt-4" style="gap: 10px">
-                        <div
-                          style="position: relative"
-                          class="btn btn-sm badge-info col-2 p-2"
-                          v-for="(item, k) in selectedAmenitites"
-                          :key="'ams' + item.id"
-                        >
-                          {{ item.titleEn }}
-                          <div class="deleteAmenity" @click="deleteAmenity(k)">
-                            <i class="ti ti-trash"></i>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
                   <ul
                     class="nav nav-underline ml-4"
                     id="myTab"
@@ -287,7 +69,10 @@
                     >
                       <div class="row">
                         <div class="mb-3 form-group col-12">
-                          <label> Service title (EN) </label>
+                          <label for="" class="costum_label"
+                            >Service title <span>(EN)</span>
+                            <span class="required-star">*</span></label
+                          >
                           <div class="controls">
                             <input
                               v-model="data.titleEn"
@@ -302,7 +87,10 @@
                           </div>
                         </div>
                         <div class="mb-3 form-group col-12">
-                          <label> Description (EN) </label>
+                          <label for="" class="costum_label"
+                            >Description <span>(EN)</span>
+                            <span class="required-star">*</span></label
+                          >
                           <div class="controls">
                             <textarea
                               v-model="data.descEn"
@@ -321,7 +109,10 @@
                       aria-labelledby="link1-tab"
                     >
                       <div class="mb-3 form-group col-12">
-                        <label> Service title (JO)</label>
+                        <label for="" class="costum_label">
+                          Service title <span>(AR)</span>
+                          <span class="required-star">*</span></label
+                        >
                         <div class="controls">
                           <input
                             v-model="data.titleAr"
@@ -336,7 +127,11 @@
                         </div>
                       </div>
                       <div class="mb-3 form-group col-12">
-                        <label> Description (JO) </label>
+                        <label for="" class="costum_label">
+                          Description <span>(AR)</span>
+                          <span class="required-star">*</span></label
+                        >
+
                         <div class="controls">
                           <textarea
                             v-model="data.descAr"
@@ -349,63 +144,322 @@
                     </div>
                   </div>
                   <div class="mb-3 form-group col-12">
-                    <label> Description </label>
-                    <div class="controls">
-                      <textarea
-                        v-model="data.description"
-                        name="description"
-                        class="form-control"
-                      ></textarea>
-                      <div class="help-block"></div>
+                    <label for="" class="costum_label">
+                      Upload Gallaries
+                      <span class="required-star">*</span></label
+                    >
+                    <MultipleImagesUpload
+                      @upload="HandleGalleryUpload"
+                      @remove-image="HandleRemoveImage"
+                      :galleries="data.galleries"
+                      :params="'Gallery'"
+                    />
+                  </div>
+
+                  <div class="mb-3 form-group col-12 row">
+                    <div
+                      class="d-flex align-items-center"
+                      style="padding-bottom: 15px"
+                    >
+                      <h6 class="heading-with-line">Policies</h6>
+                      <div class="line"></div>
+                    </div>
+                    <div class="col-12">
+                      <p>
+                        Cancelation Policy <span class="required-star">*</span>
+                      </p>
+                      <SingleFileUpload
+                        @upload="HandleCancelationUpload"
+                        :file="data.cancelationFilePath"
+                        :params="'Cancelation'"
+                      />
+                    </div>
+                    <div class="col-12 mt-4">
+                      <p>
+                        Reschedule Policy <span class="required-star">*</span>
+                      </p>
+
+                      <SingleFileUpload
+                        @upload="HandlePolicyUpload"
+                        :file="data.rescheduleFilePathId"
+                        :params="'Reschedule'"
+                      />
+                    </div>
+                  </div>
+
+                  <div
+                    class="d-flex align-items-center"
+                    style="padding-bottom: 15px"
+                  >
+                    <h6 class="heading-with-line">Details</h6>
+                    <div class="line"></div>
+                  </div>
+                  <div class="col-6">
+                    <div class="mb-3 form-group col-12">
+                      <label class="costum_label">
+                        Category <span class="required-star">*</span>
+                      </label>
+                      <div class="controls">
+                        <select
+                          @change="getSubCategories($event)"
+                          name="select"
+                          id="select"
+                          v-model="data.categoryId"
+                          required
+                          class="form-control"
+                          aria-invalid="false"
+                        >
+                          <option value="" class="default-selected">
+                            Select the main category
+                          </option>
+                          <option
+                            :value="item.id"
+                            v-for="item in categories"
+                            :key="item.id"
+                          >
+                            {{ item.nameEn }}
+                          </option>
+                        </select>
+                        <div class="help-block"></div>
+                      </div>
+                    </div>
+                    <div class="mb-3 form-group col-12" v-if="subcategories">
+                      <label class="costum_label">
+                        Sub Category <span class="required-star">*</span></label
+                      >
+                      <div class="controls">
+                        <select
+                          name="select"
+                          id="select"
+                          v-model="data.subCategoryId"
+                          required=""
+                          class="form-control"
+                          aria-invalid="false"
+                        >
+                          <option value="">Main Sub Category</option>
+                          <option
+                            :value="item.id"
+                            v-for="item in subcategories"
+                            :key="item.id"
+                          >
+                            {{ item.nameEn }}
+                          </option>
+                        </select>
+                        <div class="help-block"></div>
+                      </div>
+                    </div>
+                    <div class="mb-3 form-group col-12">
+                      <label class="costum_label">
+                        Location <span class="required-star">*</span></label
+                      >
+                      <div class="controls">
+                        <select
+                          v-model="data.locationId"
+                          name="select"
+                          id="select"
+                          required=""
+                          class="form-control"
+                          aria-invalid="false"
+                        >
+                          <option value="">Select location</option>
+                          <option
+                            :value="item.id"
+                            v-for="item in locations"
+                            :key="item.id"
+                          >
+                            {{ item.titleEn }}
+                          </option>
+                        </select>
+                        <div class="help-block"></div>
+                      </div>
+                    </div>
+                    <div class="mb-3 form-group col-12">
+                      <label class="costum_label">
+                        Personal information
+                        <span class="required-star">*</span></label
+                      >
+                      <div class="controls">
+                        <select
+                          v-model="data.personalInfoId"
+                          name="select"
+                          id="select"
+                          required=""
+                          class="form-control"
+                          aria-invalid="false"
+                        >
+                          <option value="">Select perosonal information</option>
+                          <option
+                            :value="item.id"
+                            v-for="item in personals"
+                            :key="item.id"
+                          >
+                            {{ item.titleEn }}
+                          </option>
+                        </select>
+                        <div class="help-block"></div>
+                      </div>
+                    </div>
+                    <div class="mb-3 form-group col-12">
+                      <label class="costum_label"> Vendor Discount </label>
+                      <div class="controls">
+                        <input
+                          v-model="data.companyFee"
+                          type="number"
+                          name="text"
+                          class="form-control"
+                          required=""
+                          data-validation-required-message="This field is required"
+                          aria-invalid="false"
+                        />
+                        <div class="help-block"></div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-6">
+                    <div class="mb-3 form-group col-12">
+                      <label class="costum_label">
+                        Pricing Type <span class="required-star">*</span></label
+                      >
+                      <div class="controls">
+                        <select
+                          v-model="data.pricingTypeId"
+                          name="select"
+                          id="select"
+                          required=""
+                          class="form-control"
+                          aria-invalid="false"
+                        >
+                          <option value="">Select pricing</option>
+                          <option
+                            :value="item.id"
+                            v-for="item in pricings"
+                            :key="item.id"
+                          >
+                            {{ item.titleEn }}
+                          </option>
+                        </select>
+                        <div class="help-block"></div>
+                      </div>
+                    </div>
+                    <div class="mb-3 form-group col-12">
+                      <label class="costum_label">
+                        Interest <span class="required-star">*</span></label
+                      >
+                      <div class="controls">
+                        <select
+                          v-model="data.interestId"
+                          name="select"
+                          id="select"
+                          required=""
+                          class="form-control"
+                          aria-invalid="false"
+                        >
+                          <option value="">Select your interest</option>
+                          <option
+                            :value="item.id"
+                            v-for="item in interests"
+                            :key="item.id"
+                          >
+                            {{ item.nameEn }}
+                          </option>
+                        </select>
+                        <div class="help-block"></div>
+                      </div>
+                    </div>
+                    <div class="mb-3 form-group col-12">
+                      <label class="costum_label">
+                        Adrenaline meter
+                        <span class="required-star">*</span></label
+                      >
+                      <div class="controls">
+                        <select
+                          v-model="data.adrenalineId"
+                          name="select"
+                          id="select"
+                          required=""
+                          class="form-control"
+                          aria-invalid="false"
+                        >
+                          <option value="">
+                            Select the level of adrenaline
+                          </option>
+                          <option
+                            :value="item.id"
+                            v-for="item in adrenalines"
+                            :key="item.id"
+                          >
+                            {{ item.titleEn }}
+                          </option>
+                        </select>
+                        <div class="help-block"></div>
+                      </div>
+                    </div>
+                    <div class="mb-3 form-group col-12">
+                      <label class="costum_label">
+                        Amenities <span class="required-star">*</span></label
+                      >
+                      <div class="controls">
+                        <select
+                          @change="setAmenities($event)"
+                          name="select"
+                          id="select"
+                          required=""
+                          class="form-control"
+                          aria-invalid="false"
+                        >
+                          <option>-- Select Amenities</option>
+                          <option
+                            :value="key"
+                            v-for="(item, key) in amenitites"
+                            :key="item.id + 'ame'"
+                          >
+                            {{ item.titleEn }}
+                          </option>
+                        </select>
+                        <div class="help-block"></div>
+                      </div>
+                      <div class="col-12 row mt-4" style="gap: 10px">
+                        <div
+                          style="position: relative"
+                          class="btn btn-sm col-2 p-2"
+                          v-for="(item, k) in selectedAmenitites"
+                          :key="'ams' + item.id"
+                        >
+                          <img
+                            height="50"
+                            width="50"
+                            :src="item.imagePath"
+                            :alt="item.titleEn"
+                          />
+                          <h6 style="width: max-content">{{ item.titleEn }}</h6>
+                          <div class="deleteAmenity" @click="deleteAmenity(k)">
+                            <span
+                              style="
+                                background: #80808057;
+                                width: 20px;
+                                display: block;
+                                height: 20px;
+                                border-radius: 50%;
+                              "
+                              >X</span
+                            >
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
-                <div class="mb-3 form-group col-12">
-                  <p>Gallery</p>
-                  <FileUpload
-                    v-if="load"
-                    :key="uploadComponenet"
-                    @upload="HandleGalleryUpload"
-                    :upload="true"
-                    :fileList="filesList"
-                    :request="true"
-                    :multiple="true"
-                    :params="'Gallery'"
-                  />
-                </div>
-                <div class="mb-3 form-group col-12 row">
-                  <div class="col-6">
-                    <p>Cancelation Policy</p>
 
-                    <FileUpload
-                      :key="uploadComponenet"
-                      @upload="HandleCancelationUpload"
-                      :upload="true"
-                      :multiple="false"
-                      :request="true"
-                      :fileType="'PDF'"
-                      :fileList="CancelationList"
-                      :params="'Cancelation'"
-                    />
-                  </div>
-                  <div class="col-6">
-                    <p>Reschedule Policy</p>
-
-                    <FileUpload
-                      :key="uploadComponenet"
-                      @upload="HandlePolicyUpload"
-                      :upload="true"
-                      :multiple="false"
-                      :request="true"
-                      :fileType="'PDF'"
-                      :fileList="PolicyList"
-                      :params="'Reschedule'"
-                    />
-                  </div>
+                <div
+                  class="d-flex align-items-center"
+                  style="padding-bottom: 15px"
+                >
+                  <h6 class="heading-with-line">Location</h6>
+                  <div class="line"></div>
                 </div>
-                <div class="mb-3 form-group col-12">
+                <div class="mb-3 form-group col-8">
                   <div class="controls">
-                    <div id="map-wrap" style="height: 75vh">
+                    <div id="map-wrap" style="height: 55vh">
                       <client-only>
                         <Map @address="setAddress" />
                       </client-only>
@@ -414,34 +468,79 @@
                     <div class="help-block"></div>
                   </div>
                 </div>
+                <div class="mb-3 form-group col-4">
+                  <div>
+                    <label class="costum_label"> Search </label>
+                    <input
+                      placeholder="search"
+                      type="text"
+                      name="text"
+                      class="form-control"
+                    />
+                  </div>
+                  <div>
+                    <label class="costum_label">
+                      Location manually
+                      <span class="required-star">*</span></label
+                    >
+                    <input
+                      placeholder="location"
+                      type="text"
+                      name="text"
+                      class="form-control"
+                    />
+                  </div>
+                  <div>
+                    <label class="costum_label">
+                      Notes <span class="required-star">*</span></label
+                    >
+                    <textarea
+                      name=""
+                      class="form-control"
+                      id=""
+                      placeholder="Type your notes.."
+                      cols="30"
+                      rows="10"
+                    ></textarea>
+                  </div>
+                </div>
+
                 <div class="mb-3 form-group col-12">
-                  <label> What to expect </label>
+                  <div
+                    class="d-flex align-items-center"
+                    style="padding-bottom: 15px"
+                  >
+                    <h6 class="heading-with-line" style="width: 200px">
+                      Service expectations
+                    </h6>
+                    <div class="line"></div>
+                  </div>
+                  <label class="costum_label">
+                    What to expect <span class="required-star">*</span></label
+                  >
                   <div class="controls">
-                    <!-- <editor1
-                      @updated="setWhatToExpect"
-                      :content="data.whatToExpectId"
-                      :key="editorNbr"
-                    /> -->
                     <client-only placeholder="loading...">
-                      <!-- <CkeditorNuxt v-model="data.whatToExpectId"/> -->
                       <CKEditor v-model="data.whatToExpectId" />
                     </client-only>
-                    <!-- <textarea
-                      v-model="data.whatToExpectId"
-                      name="expect"
-                      class="form-control"
-                    ></textarea> -->
                     <div class="help-block"></div>
                   </div>
                 </div>
 
-                <h4 class="my-8">Pricing Structure</h4>
-                <!---
-                                    Vehicule per group
-                                --->
+                <div
+                  class="d-flex align-items-center"
+                  style="padding-bottom: 15px"
+                >
+                  <h6 class="heading-with-line" style="width: 200px">
+                    Pricing Structure
+                  </h6>
+                  <div class="line"></div>
+                </div>
                 <div class="col-12 row">
                   <div class="mb-3 form-group col-6">
-                    <label> Max Reservation Number </label>
+                    <label class="costum_label">
+                      Max Reservation Number
+                      <span class="required-star">*</span></label
+                    >
                     <div class="controls">
                       <input
                         v-model="data.maxReservations"
@@ -453,7 +552,10 @@
                     </div>
                   </div>
                   <div class="mb-3 form-group col-6">
-                    <label> Vehicle Max. number per day </label>
+                    <label class="costum_label">
+                      Vehicle Max. number per day
+                      <span class="required-star">*</span>
+                    </label>
                     <div class="controls">
                       <input
                         v-model="data.vehicleMaxNumberPerDay"
@@ -465,7 +567,10 @@
                     </div>
                   </div>
                   <div class="mb-3 form-group col-6">
-                    <label> Person Per Vehicle (min) </label>
+                    <label class="costum_label">
+                      Person Per Vehicle (min)
+                      <span class="required-star">*</span>
+                    </label>
                     <div class="controls">
                       <input
                         v-model="data.personPerVehicleMin"
@@ -477,7 +582,10 @@
                     </div>
                   </div>
                   <div class="mb-3 form-group col-6">
-                    <label> Person Per Vehicle (max) </label>
+                    <label class="costum_label">
+                      Person Per Vehicle (max)
+                      <span class="required-star">*</span>
+                    </label>
                     <div class="controls">
                       <input
                         v-model="data.personPerVehicleMax"
@@ -488,36 +596,47 @@
                       <div class="help-block"></div>
                     </div>
                   </div>
+                  <div
+                    class="d-flex align-items-center"
+                    style="padding-bottom: 15px"
+                  >
+                    <h6 class="heading-with-line" style="width: 200px">
+                      Time & Pricing
+                    </h6>
+                    <div class="line"></div>
+                  </div>
                   <div class="col-12">
                     <div class="col-12 row">
-                      <p class="col-2">Time & Pricing</p>
-                      <div class="mb-3 form-group col-2">
-                        <span
-                          @click="durationCount(true)"
-                          class="btn btn-md btn-info"
-                          >Add <i class="fa fa-plus"></i
-                        ></span>
-                      </div>
+                      <!-- <div class="mb-3 form-group col-2">
+                        <span @click="durationCount(true)" class="btn btn-md btn-info">Add <i
+                            class="fa fa-plus"></i></span>
+                      </div> -->
                     </div>
                     <div
-                      class="col-12 row"
+                      class="col-12 row align-items-end"
                       v-for="(cnt, key) in data.serviceDuration"
                       :key="key + 'duration'"
                     >
-                      <div class="mb-3 form-group col-4">
-                        <label> Duration (minutes) </label>
+                      <div class="mb-3 form-group col-5">
+                        <label class="costum_label">
+                          Duration (minutes)
+                          <span class="required-star">*</span></label
+                        >
                         <div class="controls">
                           <input
                             v-model="cnt.duration"
                             type="number"
                             name="text"
                             class="form-control"
+                            placeholder="DD"
                           />
                           <div class="help-block"></div>
                         </div>
                       </div>
-                      <div class="mb-3 form-group col-4">
-                        <label> Price </label>
+                      <div class="mb-3 form-group col-5">
+                        <label class="costum_label">
+                          Price <span class="required-star">*</span></label
+                        >
                         <div class="controls">
                           <input
                             v-model="cnt.price"
@@ -528,176 +647,249 @@
                           <div class="help-block"></div>
                         </div>
                       </div>
-                      <div class="mb-3 form-group col-2">
+                      <div
+                        class="mb-3 form-group col-2"
+                        style="display: flex; justify-content: space-around"
+                      >
                         <span
+                          class="trash-inc"
                           v-if="action == 'insert'"
                           @click="durationDelete(key, false)"
-                          class="btn btn-md btn-danger"
                           ><i class="fa fa-trash"></i
                         ></span>
                         <span
+                          class="trash-inc"
                           v-else
                           @click="durationDelete(key, true, cnt.id)"
-                          class="btn btn-md btn-danger"
                           ><i class="fa fa-trash"></i
+                        ></span>
+                        <span class="plus-inc" @click="durationCount(true)"
+                          ><i class="fa fa-plus"></i
                         ></span>
                       </div>
                     </div>
                   </div>
                 </div>
-                <h4 class="my-8">Timing</h4>
+                <!-- edits from here -->
+                <div
+                  class="d-flex align-items-center"
+                  style="padding-bottom: 15px"
+                >
+                  <h6 class="heading-with-line">Timing</h6>
+                  <div class="line"></div>
+                </div>
                 <div class="mb-3 form-group col-12 row">
                   <table class="table">
-                    <thead>
-                      <th style="width: 25%">Weekday</th>
-                      <th style="width: 25%">From</th>
-                      <th style="width: 25%">To</th>
-                      <th style="width: 25%"></th>
+                    <thead style="margin-bottom: 10px">
+                      <tr>
+                        <th style="width: 25%"></th>
+                        <th style="width: 25%" class="costum_label">From</th>
+                        <th style="width: 25%" class="costum_label">To</th>
+                        <th style="width: 25%">
+                          <a
+                            style="
+                              width: max-content;
+                              padding: 2px 23px;
+                              color: #5d87ff;
+                            "
+                            class="btn btn-md col-12"
+                            @click="applyAll()"
+                          >
+                            <i class="fa fa-check"></i> Apply to all
+                          </a>
+                        </th>
+                      </tr>
                     </thead>
                     <tbody>
-                      <tr v-for="(day, k) in days" :key="day + 'day'">
-                        <td style="width: 25%">{{ k }}</td>
-                        <td style="width: 25%" class="">
-                          <div class="timingTd">
-                            <select
-                              class="form-control"
-                              v-model="startH[k]"
-                              style="width: 4em; padding: 0.4em"
-                            >
-                              <option
-                                :value="i"
-                                v-for="(n, i) in 23"
-                                :key="i + 'fromh'"
-                              >
-                                {{ pad(i) }}
-                              </option>
-                            </select>
-                            :
-
-                            <select
-                              class="form-control"
-                              v-model="startM[k]"
-                              style="width: 4em; padding: 0.4em"
-                            >
-                              <option
-                                :value="i"
-                                v-for="(n, i) in 59"
-                                :key="i + 'fromm'"
-                              >
-                                {{ pad(i) }}
-                              </option>
-                            </select>
-                          </div>
+                      <tr
+                        v-for="(day, k) in days"
+                        :key="day + 'day'"
+                        class="timing"
+                      >
+                        <td style="width: 20%">
+                          {{ k.charAt(0).toUpperCase() + k.slice(1) }}
                         </td>
-                        <td style="width: 25%" class="">
-                          <div class="timingTd">
-                            <select
-                              class="form-control"
-                              v-model="endH[k]"
-                              style="width: 4em; padding: 0.4em"
-                            >
-                              <option
-                                :value="i"
-                                v-for="(n, i) in 23"
-                                :key="i + 'toh'"
-                              >
-                                {{ pad(i) }}
-                              </option>
-                            </select>
-                            :
-
-                            <select
-                              class="form-control"
-                              v-model="endM[k]"
-                              style="width: 4em; padding: 0.4em"
-                            >
-                              <option
-                                :value="i"
-                                v-for="(n, i) in 59"
-                                :key="i + 'tom'"
-                              >
-                                {{ pad(i) }}
-                              </option>
-                            </select>
-                          </div>
-                        </td>
-                        <td v-if="k == 'saturday'" style="width: 25%">
-                          <a
-                            class="btn btn-info btn-md col-12"
-                            @click="applyAll()"
-                            >Apply to all</a
+                        <td style="width: 25%">
+                          <div
+                            v-for="(section, index) in data.serviceTimings[k]"
+                            :key="index"
+                            class="addFromToSection"
                           >
+                            <!-- <div class="test-div">
+                              {{ String(section.startH) }}
+                            </div> -->
+                            <div class="timingTd">
+                              <select
+                                class="form-control"
+                                v-model="section.startH"
+                                style="width: 4em; padding: 0.4em"
+                              >
+                                <option
+                                  :value="pad(i)"
+                                  v-for="(n, i) in 24"
+                                  :key="i + 'fromh'"
+                                >
+                                  {{ pad(i) }}
+                                </option>
+                              </select>
+                              :
+                              <select
+                                class="form-control"
+                                v-model="section.startM"
+                                style="width: 4em; padding: 0.4em"
+                              >
+                                <option
+                                  :value="pad(i)"
+                                  v-for="(n, i) in 60"
+                                  :key="i + 'fromm'"
+                                >
+                                  {{ pad(i) }}
+                                </option>
+                              </select>
+                            </div>
+                          </div>
+                        </td>
+                        <td style="width: 25%">
+                          <div
+                            v-for="(section, index) in data.serviceTimings[k]"
+                            :key="index"
+                            class="addFromToSection"
+                          >
+                            <!-- <div class="test-div">
+                              {{ data.serviceTimings[k][index]["endH"] }}
+                            </div> -->
+                            <div class="timingTd">
+                              <select
+                                class="form-control"
+                                v-model="data.serviceTimings[k][index]['endH']"
+                                style="width: 4em; padding: 0.4em"
+                              >
+                                <option
+                                  :value="pad(i)"
+                                  v-for="(n, i) in 24"
+                                  :key="i + 'toh'"
+                                >
+                                  {{ pad(i) }}
+                                </option>
+                              </select>
+                              :
+                              <select
+                                class="form-control"
+                                v-model="section.endM"
+                                style="width: 4em; padding: 0.4em"
+                              >
+                                <option
+                                  :value="pad(i)"
+                                  v-for="(n, i) in 60"
+                                  :key="i + 'tom'"
+                                >
+                                  {{ pad(i) }}
+                                </option>
+                              </select>
+                            </div>
+                          </div>
+                        </td>
+                        <td style="width: 25%">
+                          <div
+                            class="mb-3 gap-3 form-group col-2"
+                            style="display: flex; justify-content: space-around"
+                          >
+                            <span
+                              class="trash-inc"
+                              v-if="action == 'insert'"
+                              @click="removeSection(k, index)"
+                              ><i class="fa fa-trash"></i
+                            ></span>
+                            <span
+                              class="trash-inc"
+                              v-else
+                              @click="removeSection(k, index)"
+                              ><i class="fa fa-trash"></i
+                            ></span>
+                            <span class="plus-inc" @click="addSection(k)"
+                              ><i class="fa fa-plus"></i
+                            ></span>
+                          </div>
                         </td>
                       </tr>
                     </tbody>
                   </table>
                 </div>
+                <!-- To here  -->
                 <div class="col-12 row">
                   <div class="mb-3 form-group col-3">
-                    <label> Featured </label>
-                    <div class="controls">
-                      <div class="form-check form-switch">
-                        <input
-                          v-model="data.isFeatured"
-                          value="yes"
-                          class="form-check-input"
-                          type="checkbox"
-                          id="flexSwitchCheckChecked"
-                          checked=""
-                        />
+                    <div class="latest-bx">
+                      <label> Featured </label>
+                      <div class="controls">
+                        <div class="form-check form-switch">
+                          <input
+                            v-model="data.isFeatured"
+                            value="yes"
+                            class="form-check-input"
+                            type="checkbox"
+                            id="flexSwitchCheckChecked"
+                            checked=""
+                          />
+                        </div>
                       </div>
                     </div>
                   </div>
                   <div class="mb-3 form-group col-3">
-                    <label> Free cancelation </label>
-                    <div class="controls">
-                      <div class="form-check form-switch">
-                        <input
-                          v-model="data.isFreeCollection"
-                          value="yes"
-                          class="form-check-input"
-                          type="checkbox"
-                          id="flexSwitchCheckChecked"
-                          checked=""
-                        />
+                    <div class="latest-bx">
+                      <label> Free cancelation </label>
+                      <div class="controls">
+                        <div class="form-check form-switch">
+                          <input
+                            v-model="data.isFreeCollection"
+                            value="yes"
+                            class="form-check-input"
+                            type="checkbox"
+                            id="flexSwitchCheckChecked"
+                            checked=""
+                          />
+                        </div>
                       </div>
                     </div>
                   </div>
                   <div class="mb-3 form-group col-3">
-                    <label> Pick and drop </label>
-                    <div class="controls">
-                      <div class="form-check form-switch">
-                        <input
-                          v-model="data.isPickupAndDrop"
-                          value="yes"
-                          class="form-check-input"
-                          type="checkbox"
-                          id="flexSwitchCheckChecked"
-                          checked=""
-                        />
+                    <div class="latest-bx">
+                      <label> Pick and drop </label>
+                      <div class="controls">
+                        <div class="form-check form-switch">
+                          <input
+                            v-model="data.isPickupAndDrop"
+                            value="yes"
+                            class="form-check-input"
+                            type="checkbox"
+                            id="flexSwitchCheckChecked"
+                            checked=""
+                          />
+                        </div>
                       </div>
                     </div>
                   </div>
                   <div class="mb-3 form-group col-3">
-                    <label> Cash on delivery </label>
-                    <div class="controls">
-                      <div class="form-check form-switch">
-                        <input
-                          v-model="data.isCashOnDelivery"
-                          value="yes"
-                          class="form-check-input"
-                          type="checkbox"
-                          id="flexSwitchCheckChecked"
-                          checked=""
-                        />
+                    <div class="latest-bx">
+                      <label> Cash on delivery </label>
+                      <div class="controls">
+                        <div class="form-check form-switch">
+                          <input
+                            v-model="data.isCashOnDelivery"
+                            value="yes"
+                            class="form-check-input"
+                            type="checkbox"
+                            id="flexSwitchCheckChecked"
+                            checked=""
+                          />
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
 
-                <div class="col-12">
-                  <div class="controls">
-                    <button class="btn btn-md btn-info">Save</button>
+                <div class="col-12" style="padding-top: 40px">
+                  <div class="controls" style="text-align: right">
+                    <button class="btn btn-md btn-info save-btn">Save</button>
                     <div class="help-block"></div>
                   </div>
                 </div>
@@ -715,8 +907,11 @@ import axios from "axios";
 import Map from "@/components/map";
 import moment from "moment";
 import FileUpload from "~/components/fileUpload.vue";
+import SingleImageUpload from "~/components/singleImageUpload.vue";
+import singleFileUpload from "~/components/singleFileUpload.vue";
 import editor1 from "@/components/editor1";
 import CKEditor from "~/components/CKEditor.vue";
+import MultipleImagesUpload from "../../components/multipleImagesUpload.vue";
 export default {
   layout: "adminLte",
   async asyncData({ params }) {
@@ -753,13 +948,14 @@ export default {
   name: "usertype",
   data() {
     return {
+      // categoryId: null,  // Initialize to null or any other value that does not match the default option
       load: false,
       dataTable: null,
       link: "/base/api/services",
       action: "insert",
       id: null,
       data: {
-        fees: null,
+        companyFee: null,
         titleEn: null,
         titleAr: null,
         imagePath: null,
@@ -772,7 +968,15 @@ export default {
         personPerVehicleMin: null,
         personPerVehicleMax: null,
         description: null,
-        serviceTimings: [],
+        serviceTimings: {
+          saturday: [],
+          sunday: [],
+          monday: [],
+          tuesday: [],
+          wednesday: [],
+          thursday: [],
+          friday: [],
+        },
         amenitites: [],
         galleries: [],
         serviceDuration: [
@@ -796,8 +1000,8 @@ export default {
         pricingTypeId: null,
         offlineCasesId: null,
         address: null,
-        latitude: null,
-        longitude: null,
+        latitude: "31.95430000",
+        longitude: "35.91050000",
         vendoreName: null,
         price: null,
         rate: 5,
@@ -829,10 +1033,6 @@ export default {
         thursday: 6,
         friday: 7,
       },
-      imagesList: [],
-      filesList: [],
-      PolicyList: [],
-      CancelationList: [],
       previous: [],
       editorNbr: 1,
       config: {
@@ -862,15 +1062,13 @@ export default {
     } else {
       await this.getAll();
     }
-    this.startH["saturday"] = 0;
-    this.startM["saturday"] = 0;
-    this.endH["saturday"] = 0;
-    this.endM["saturday"] = 0;
-    this.applyAll();
   },
   component: {
     Map,
     FileUpload,
+    SingleImageUpload,
+    singleFileUpload,
+    MultipleImagesUpload,
     editor1,
     CKEditor,
   },
@@ -908,7 +1106,6 @@ export default {
         .then((response) => {
           if (response.data.success) {
             this.data.galleries = response.data.response;
-            this.filesList = response.data.response;
           } else this.$toast.error(response.data.message).goAway(1500);
         })
         .catch((error) => {
@@ -920,8 +1117,9 @@ export default {
         .get("/base/amenities/service/" + id, this.config)
         .then((response) => {
           if (response.data.success) {
-            this.data.amenities = response.data.response;
-            this.data.amenities.forEach((item) => {
+            console.log(response.data);
+            this.data.amenitites = response.data.response;
+            this.data.amenitites.forEach((item) => {
               this.selectedAmenitites.push(item);
             });
           } else this.$toast.error(response.data.message).goAway(1500);
@@ -941,7 +1139,41 @@ export default {
         )
         .then((response) => {
           if (response.data.success) {
-            this.data.serviceTimings = response.data.response;
+            const mapOfDayAndDayId = [
+              { 1: "saturday" },
+              { 2: "sunday" },
+              { 3: "monday" },
+              { 4: "tuesday" },
+              { 5: "wednesday" },
+              { 6: "thursday" },
+              { 7: "friday" },
+            ];
+
+            response.data.response.forEach((el) => {
+              let from = ["00", "00", "00"];
+              let to = ["00", "00", "00"];
+              if (el.timeFrom && el.timeTo) {
+                from = el.timeFrom.split(":");
+                to = el.timeTo.split(":");
+              }
+
+              let indexOfDay =
+                mapOfDayAndDayId[el.dayId - 1][el.dayId].toString();
+
+              if (!this.data.serviceTimings[indexOfDay]) {
+                this.$set(this.data.serviceTimings, indexOfDay, []);
+              }
+
+              this.data.serviceTimings[indexOfDay].push({
+                startH: from[0].toString(),
+                startM: from[1].toString(),
+                endH: to[0].toString(),
+                endM: to[1].toString(),
+              });
+            });
+
+            console.log("timing", this.data.serviceTimings);
+
             response.data.response.forEach((el) => {
               let from = ["00", "00", "00"];
               let to = ["00", "00", "00"];
@@ -976,19 +1208,10 @@ export default {
         .then((response) => {
           if (response.data.success) {
             this.data = response.data.response;
-            if (this.data.imagePath)
-              this.imagesList = [
-                { imgName: "Image", imgPath: this.data.imagePath },
-              ];
-            if (this.data.cancelationFilePath)
-              this.CancelationList = [this.data.cancelationFilePath];
-            if (this.data.rescheduleFilePathId)
-              this.PolicyList = [this.data.rescheduleFilePathId];
             this.getDuration(this.id);
             this.getTiming(this.id);
             this.getGallery(this.id);
             this.getAmenities(this.id);
-            this.load = true;
           } else this.$toast.error(response.data.message).goAway(1500);
         })
         .catch((error) => {
@@ -1061,7 +1284,30 @@ export default {
       // if (!this.data.vendorId) error += "Vendor, ";
       if (!this.data.latitude) error += "Lat, ";
       if (!this.data.longitude) error += "Lng, ";
+      console.log(this.data.subCategoryId);
       return error;
+    },
+
+    addSection(day) {
+      if (!this.data.serviceTimings[day]) {
+        this.$set(this.data.serviceTimings, day, []);
+      }
+      this.data.serviceTimings[day].push({
+        startH: "00",
+        startM: "00",
+        endH: "00",
+        endM: "00",
+      });
+      console.log("added data", this.data.serviceTimings);
+    },
+    removeSection(day, index) {
+      // Check if the day exists and has at least one element
+      if (
+        this.data.serviceTimings[day] &&
+        this.data.serviceTimings[day].length > 0
+      ) {
+        this.data.serviceTimings[day].splice(index, 1);
+      }
     },
     submit() {
       let ame = [];
@@ -1080,20 +1326,24 @@ export default {
       this.data.isFeatured = this.data.isFeatured ? 1 : 0;
       this.data.isFreeCollection = this.data.isFreeCollection ? 1 : 0;
       this.data.isPickupAndDrop = this.data.isPickupAndDrop ? 1 : 0;
-      for (let k in this.days) {
-        this.data.serviceTimings.push({
-          dayId: this.days[k],
-          timeFrom: moment(
-            this.startH[k] + ":" + this.startM[k],
-            "HH:mm:ss"
-          ).format("HH:mm:ss"),
-          timeTo: moment(this.endH[k] + ":" + this.endM[k], "HH:mm:ss").format(
-            "HH:mm:ss"
-          ),
-          isActive: 1,
-          locationId: this.data.locationId,
+      let serviceTimingsList = [];
+      for (let day in this.data.serviceTimings) {
+        this.data.serviceTimings[day].forEach((timing) => {
+          serviceTimingsList.push({
+            dayId: this.days[day],
+            timeFrom: moment(
+              timing.startH + ":" + timing.startM,
+              "HH:mm:ss"
+            ).format("HH:mm:ss"),
+            timeTo: moment(timing.endH + ":" + timing.endM, "HH:mm:ss").format(
+              "HH:mm:ss"
+            ),
+            isActive: 1,
+            locationId: this.data.locationId,
+          });
         });
       }
+
       if (this.data.serviceDuration) {
         if (!this.data.serviceDuration[0]) {
           this.$toast.error("Service Duration is empty").goAway(1500);
@@ -1114,8 +1364,12 @@ export default {
       }
       const formData = {
         ...this.data,
+        serviceTimings: serviceTimingsList,
         serviceId: this.serviceId,
       };
+
+      console.log(formData);
+
       if (this.action == "insert") {
         axios
           .post(this.link, formData, this.config)
@@ -1159,9 +1413,10 @@ export default {
           });
       }
     },
+    //
     initForm() {
       this.data = {
-        fees: null,
+        companyFee: null,
         titleEn: null,
         titleAr: null,
         imagePath: null,
@@ -1223,16 +1478,21 @@ export default {
     setWhatToExpect(data) {
       this.data.whatToExpectId = data;
     },
-    HandleFileUpload(file) {
-      this.data.imagePath = file;
+    handleSingleImageUpload(image) {
+      this.data.imagePath = image;
     },
     HandleGalleryUpload(file) {
       this.data.galleries.push({
-        imgName: file,
-        imgPath: file,
+        imgName: file.imageName,
+        imgPath: file.imagePath,
         isActive: 1,
         vendorId: this.data.vendorId,
       });
+    },
+    HandleRemoveImage(index) {
+      this.data.galleries = this.data.galleries.filter(
+        (item, i) => i !== index
+      );
     },
     HandlePolicyUpload(file) {
       this.data.rescheduleFilePathId = file;
@@ -1268,22 +1528,150 @@ export default {
       } else this.data.serviceDuration.splice(how, 1);
     },
     applyAll() {
+      let firstDayWithArray;
+      let firstArrayValues;
+
+      // Find the first day with an array in this.data.serviceTimings
       for (let k in this.days) {
-        this.startH[k] = this.startH["saturday"];
-        this.startM[k] = this.startM["saturday"];
-        this.endH[k] = this.endH["saturday"];
-        this.endM[k] = this.endM["saturday"];
+        if (
+          Array.isArray(this.data.serviceTimings[k]) &&
+          this.data.serviceTimings[k].length > 0
+        ) {
+          firstDayWithArray = k;
+          firstArrayValues = JSON.parse(
+            JSON.stringify(this.data.serviceTimings[k])
+          ); // Make a deep copy of the array values
+          break;
+        }
       }
+
+      // Update all arrays in this.data.serviceTimings with a deep copy of the first array valuesss
+      for (let k in this.days) {
+        console.log(k);
+        this.data.serviceTimings[k] = firstArrayValues
+          ? JSON.parse(JSON.stringify(firstArrayValues))
+          : [];
+      }
+
       this.$forceUpdate();
       return false;
     },
     pad(n) {
-      return n < 10 ? "0" + n : n;
+      let nn = n.toString();
+      return nn.length < 2 ? "0" + nn : nn;
     },
+  },
+
+  created() {
+    this.categoryId = ""; // Set to empty string to select the default option
   },
 };
 </script>
 <style>
+.save-btn {
+  font-weight: 700;
+  font-size: 22px;
+  padding: 6px 46px;
+}
+
+.latest-bx {
+  width: 90%;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  border: 1px solid #80808038;
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.form-switch .form-check-input {
+  width: 3em;
+}
+
+.timing {
+  /* border: 0.1px solid #5d87ff61; */
+  border: 0.1px solid rgb(235 241 246);
+  border-bottom: 0.1px solid rgb(235 241 246);
+}
+
+table tbody tr.timing td:first-of-type {
+  width: 25%;
+  border-top-right-radius: 50%;
+  border-bottom-right-radius: 50%;
+  font-size: 24px;
+  color: black;
+}
+
+.blue-day {
+  width: 25%;
+  background: #5d87ff;
+  border-top-right-radius: 50%;
+  border-bottom-right-radius: 50%;
+  font-size: 24px;
+  color: white;
+}
+
+.trash-inc {
+  display: inline-block;
+  align-content: end;
+  background: #fdf2f2;
+  border-radius: 8px;
+  text-align: center;
+  padding: 10px 13px;
+  cursor: pointer;
+}
+
+.trash-inc i {
+  color: #990f0f;
+  font-size: 18px;
+}
+
+.plus-inc {
+  display: inline-block;
+  align-content: end;
+  background: #5d87ff;
+  border-radius: 8px;
+  text-align: center;
+  padding: 10px 13px;
+  cursor: pointer;
+}
+
+.plus-inc i {
+  color: white;
+  font-size: 18px;
+}
+
+.leaflet-container.leaflet-touch-drag.leaflet-touch-zoom {
+  border-radius: 20px;
+}
+
+.heading-with-line {
+  color: #c3c3c3;
+  margin-bottom: 0px;
+  width: 120px;
+}
+
+.line {
+  width: -webkit-fill-available;
+  height: 0.1px;
+  background-color: #c3c3c3;
+}
+
+.nav-link.active {
+  color: #85a5ff !important;
+}
+
+.costum_label {
+  font-size: 17px;
+  font-weight: 700;
+  color: black;
+  margin-bottom: 8px;
+}
+
+.required-star {
+  color: red;
+}
+
 .timing {
   padding: 0.4em;
 }
@@ -1320,9 +1708,9 @@ export default {
 .timingTd {
   display: flex;
   gap: 10px;
-  width: 50%;
-  float: left;
+  justify-content: center;
 }
+
 .deleteAmenity {
   position: absolute;
   top: 0px;
@@ -1332,5 +1720,16 @@ export default {
   background: white;
   height: 16px;
   padding: 1px 0;
+}
+
+.addFromToSection {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  justify-content: center;
+}
+
+.test-div {
+  font-size: 100px;
 }
 </style>
